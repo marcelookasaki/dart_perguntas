@@ -15,10 +15,36 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> perguntas = [
-      'Qual é a sua banda favorita?',
-      'Qual é a sua música favorita?',
+    final perguntas = [
+      {
+        'texto': 'Qual é a sua banda favorita?',
+        'respostas': ['Led Zeppelin', 'Beach Boys', 'Rolling Stones', 'Beatles']
+      },
+      {
+        'texto': 'Qual é a sua música favorita?',
+        'respostas': [
+          'Stairway to heaven',
+          'God only knows',
+          'Start me up',
+          'Let it be'
+        ]
+      },
+      {
+        'texto': 'Qual é a seu artista favorito?',
+        'respostas': [
+          'David Bowie',
+          'Lou Reed',
+          'Janis Joplin',
+          'Jimmy Hendrix'
+        ]
+      }
     ];
+
+    List<Widget> respostas = [];
+
+    for (var textoResp in perguntas[_perguntaSelecionada].cast()['respostas']) {
+      respostas.add(Resposta(textoResp, _responder));
+    }
 
     return MaterialApp(
       home: Scaffold(
@@ -26,11 +52,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
           title: Text('Perguntas'),
         ),
         body: Column(
-          children: [
-            Questao(perguntas[_perguntaSelecionada]),
-            Resposta('Resposta 2', _responder),
-            Resposta('Resposta 3', _responder),
-            Resposta('Resposta 1', _responder),
+          children: <Widget>[
+            Questao(perguntas[_perguntaSelecionada]['texto'].toString()),
+            ...respostas,
           ],
         ),
       ),
