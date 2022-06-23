@@ -6,24 +6,35 @@ main() => runApp(PerguntaApp());
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
+  var _pontosTotal = 0;
 
   final _perguntas = const [
     {
       'texto': 'Qual é a sua banda favorita?',
-      'respostas': ['Led Zeppelin', 'Beach Boys', 'Rolling Stones', 'Beatles']
+      'respostas': [
+        {'texto': 'Led Zeppelin', 'pontos': 9},
+        {'texto': 'Beach Boys', 'pontos': 9},
+        {'texto': 'Rolling Stones', 'pontos': 10},
+        {'texto': 'Beatles', 'pontos': 8},
+      ]
     },
     {
       'texto': 'Qual é a sua música favorita?',
       'respostas': [
-        'Stairway to heaven',
-        'God only knows',
-        'Start me up',
-        'Let it be'
+        {'texto': 'Stairway to heaven', 'pontos': 10},
+        {'texto': 'God only knows', 'pontos': 10},
+        {'texto': 'Start me up', 'pontos': 8},
+        {'texto': 'Let it be', 'pontos': 9},
       ]
     },
     {
       'texto': 'Qual é a seu artista favorito?',
-      'respostas': ['David Bowie', 'Lou Reed', 'Janis Joplin', 'Jimmy Hendrix']
+      'respostas': [
+        {'texto': 'David Bowie', 'pontos': 10},
+        {'texto': 'Lou Reed', 'pontos': 9},
+        {'texto': 'Janis Joplin', 'pontos': 8},
+        {'texto': 'Jimmy Hendrix', 'pontos': 10},
+      ]
     }
   ];
 
@@ -31,12 +42,14 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return _perguntaSelecionada < _perguntas.length;
   }
 
-  void _responder() {
+  void _responder(int pontos) {
     if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
+        _pontosTotal += pontos;
       });
     }
+    print(_pontosTotal);
   }
 
   @override
@@ -51,7 +64,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 perguntas: _perguntas,
                 perguntaSelecionada: _perguntaSelecionada,
                 quandoResponder: _responder)
-            : Resultado(),
+            : Resultado(_pontosTotal),
       ),
     );
   }
